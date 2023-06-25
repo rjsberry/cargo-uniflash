@@ -35,6 +35,7 @@ pub use crate::md5_verify::md5_verify;
 pub use crate::progress::Progress;
 pub use crate::raw_args::RawArgs;
 pub use crate::read_until_matches::read_until_matches;
+pub use crate::warn_experimental_platforms::warn_experimental_platforms;
 
 pub use anyhow::{anyhow, Context};
 pub use cargo_metadata::{

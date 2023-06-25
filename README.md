@@ -23,6 +23,12 @@ If you would prefer to install TI UniFlash manually, ensure that `dslite` or
 `dslite.sh` are executables in your PATH for Mac/Linux, or `dslite.bat` in
 Windows.
 
+> **Warning**
+>
+> `cargo-uniflash` should work in Windows and Linux but these have not been
+> tested yet. If you experience any issues, or everything works correctly,
+> please let me know!
+
 ## Usage
 
 You can use `cargo-uniflash` exactly like `cargo build`, passing any arguments

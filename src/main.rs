@@ -22,6 +22,7 @@ mod md5_verify;
 mod progress;
 mod raw_args;
 mod read_until_matches;
+mod warn_experimental_platforms;
 
 use crate::common::*;
 

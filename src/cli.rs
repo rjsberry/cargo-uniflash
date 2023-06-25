@@ -1,6 +1,8 @@
 use crate::common::*;
 
 pub fn cli() -> anyhow::Result<()> {
+    warn_experimental_platforms();
+
     let args = Args::parse()?;
     let cfg = args.flash_target.into_configuration()?;
     let elf = args.elf.map(Ok).unwrap_or_else(|| cargo_build(&args.cargo))?;
