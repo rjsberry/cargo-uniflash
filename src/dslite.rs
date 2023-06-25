@@ -43,9 +43,12 @@ impl Dslite {
     #[cfg(windows)]
     pub fn new() -> anyhow::Result<Option<Self>> {
         let dslite_bat = OsStr::new("dslite.bat");
+        let canonical_dslite_bat = data_local_dir().unwrap().join("TI/UniFlash/dslite.bat");
 
-        if command_exists(dslite_bat)? {
-            Some(dslite_bat)
+        let command = if command_exists(dslite_bat)? {
+            Some(Cow::from(dslite_bat))
+        } else if command_exists(&canonical_dslite_bat)? {
+            Some(Cow::from(canonical_dslite_bat.into_os_string()))
         } else {
             None
         };

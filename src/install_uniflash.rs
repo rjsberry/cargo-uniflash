@@ -4,31 +4,27 @@ const VERSION_MAJ_MIN_PATCH: &str = "8.3.0";
 const VERSION_BUILD_METADATA: &str = "4307";
 
 pub fn install_uniflash() -> anyhow::Result<()> {
-    let tempdir = TempDir::new()?;
-
     #[cfg(target_os = "macos")]
-    let installer = tempdir.path().join("uniflash.dmg");
-
+    let ext = "dmg";
     #[cfg(target_os = "linux")]
-    let installer = tempdir.path().join("uniflash.run");
-
-    #[cfg(target_os = "macos")]
-    let url = format!(
-        "https://dr-download.ti.com/software-development/software-programming-tool/MD-QeJBJLj8gq/\
-        {VERSION_MAJ_MIN_PATCH}/uniflash_sl.{VERSION_MAJ_MIN_PATCH}.{VERSION_BUILD_METADATA}.dmg"
-    );
-
-    #[cfg(target_os = "linux")]
-    let url = format!(
-        "https://dr-download.ti.com/software-development/software-programming-tool/MD-QeJBJLj8gq/\
-        {VERSION_MAJ_MIN_PATCH}/uniflash_sl.{VERSION_MAJ_MIN_PATCH}.{VERSION_BUILD_METADATA}.run"
-    );
+    let ext = "run";
+    #[cfg(windows)]
+    let ext = "exe";
 
     #[cfg(target_os = "macos")]
     let md5 = hex::decode("c98cd29a004dfe1ad54ab4547a42179f").unwrap();
-
     #[cfg(target_os = "linux")]
     let md5 = hex::decode("1c81dba06aea8f6e26dba87f591214c4").unwrap();
+    #[cfg(windows)]
+    let md5 = hex::decode("7a14b94d31965a577aea013c3cd156e4").unwrap();
+
+    let url = format!(
+        "https://dr-download.ti.com/software-development/software-programming-tool/MD-QeJBJLj8gq/\
+        {VERSION_MAJ_MIN_PATCH}/uniflash_sl.{VERSION_MAJ_MIN_PATCH}.{VERSION_BUILD_METADATA}.{ext}"
+    );
+
+    let tempdir = TempDir::new()?;
+    let installer = tempdir.path().join(format!("uniflash.{ext}"));
 
     let t0 = Instant::now();
     download_file(Url::parse(&url).unwrap(), &installer)?;
@@ -74,5 +70,12 @@ fn do_install(dmg: &Path) -> anyhow::Result<()> {
 fn do_install(run: &Path) -> anyhow::Result<()> {
     cmd!("chmod", "+x", run).run()?;
     cmd!(run, "--mode", "unattended", "--prefix", "/opt/ti/uniflash").run()?;
+    Ok(())
+}
+
+#[cfg(windows)]
+fn do_install(exe: &Path) -> anyhow::Result<()> {
+    let install_dir = data_local_dir().unwrap().join("TI/UniFlash");
+    cmd!(exe, "--mode", "unattended", "--prefix", &install_dir).run()?;
     Ok(())
 }

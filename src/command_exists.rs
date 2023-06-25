@@ -12,6 +12,12 @@ pub fn command_exists<S: AsRef<OsStr>>(command: S) -> anyhow::Result<bool> {
 }
 
 #[cfg(windows)]
-pub fn command_exists() -> anyhow::Result<bool> {
-    todo!()
+pub fn command_exists<S: AsRef<OsStr>>(command: S) -> anyhow::Result<bool> {
+    Ok(cmd!("WHERE", command.as_ref())
+        .stdout_null()
+        .stderr_null()
+        .unchecked()
+        .run()?
+        .status
+        .success())
 }

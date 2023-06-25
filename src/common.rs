@@ -44,7 +44,7 @@ pub use cargo_metadata::{
 pub use clap::{CommandFactory, Parser};
 pub use console::{Style, Term};
 pub use dialoguer::Confirm;
-pub use dirs::{cache_dir, home_dir};
+pub use dirs::{cache_dir, data_local_dir, home_dir};
 pub use duct::cmd;
 pub use indicatif::{ProgressBar, ProgressState, ProgressStyle};
 pub use md5::{Digest, Md5};
