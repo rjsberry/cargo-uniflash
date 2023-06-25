@@ -1,0 +1,19 @@
+[package]
+name = "cargo-uniflash"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+anyhow = "1"
+cargo_metadata = "0.15"
+console = "0.15"
+clap = { version = "4", features = ["derive"] }
+dialoguer = "0.10"
+dirs = "5"
+duct = "0.13"
+hex = "0.4"
+indicatif = "0.17.5"
+md-5 = "0.10"
+once_cell = "1"
+reqwest = { version = "0.11", features = ["blocking"] }
+tempfile = "3"
