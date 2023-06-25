@@ -2,6 +2,10 @@
 
 A cargo subcommand for flashing ELF binaries onto TI processors with [TI UniFlash].
 
+<p align="center">
+  <img src="./assets/demo.svg" style="width:90%;" align="middle"/>
+</p>
+
 [TI UniFlash]: https://www.ti.com/tool/UNIFLASH
 
 ## Installation
